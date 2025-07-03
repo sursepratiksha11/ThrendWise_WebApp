@@ -1,0 +1,29 @@
+// app/admin/page.tsx
+"use client";
+
+import { useSession } from "next-auth/react";
+
+export default function AdminPage() {
+  const { data: session } = useSession();
+
+  if (!session || session.user?.email !== "youradmin@email.com") {
+    return <p>Access denied</p>;
+  }
+
+  const handleTrigger = async () => {
+    await fetch("/api/article/generate", { method: "POST" });
+    alert("Bot triggered!");
+  };
+
+  return (
+    <div className="max-w-xl mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+      <button
+        onClick={handleTrigger}
+        className="px-4 py-2 bg-green-600 text-white rounded"
+      >
+        Trigger Bot
+      </button>
+    </div>
+  );
+}

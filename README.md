@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TrendWise (React + Vite)
 
-## Getting Started
+TrendWise is now configured as a React app (Vite) for the frontend, with the existing Express backend in `backend/` and Python AI service in `ai-service/`.
 
-First, run the development server:
+## Run Frontend
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Frontend runs at `http://localhost:5173`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Run Backend
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cd backend
+npm install
+npm run dev
+```
 
-## Learn More
+Backend runs at `http://localhost:4000`.
 
-To learn more about Next.js, take a look at the following resources:
+## Run AI Service
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+cd ai-service
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+AI service runs at `http://localhost:8000`.
 
-## Deploy on Vercel
+## Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Frontend (`.env`):
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+VITE_API_BASE_URL=http://localhost:4000
+```
+
+Backend (`backend/.env`):
+
+```bash
+PORT=4000
+OPENAI_API_KEY=your_key_here
+AI_SERVICE_URL=http://127.0.0.1:8000
+MONGODB_URI=your_mongodb_connection
+```
+# TrendWise AI Finance Platform
+
+## Resume-ready statement
+Built an AI-powered finance platform that predicts stock trends and provides financial recommendations using machine learning and OpenAI APIs.
+
+## Architecture
+- Frontend: Next.js (React), Tailwind-ready UI, Recharts-friendly data endpoints
+- Backend: Node.js + Express orchestration API
+- AI/ML Service: Python FastAPI with Linear Regression and Isolation Forest models
+- Database: MongoDB (stock history storage)
+- External APIs: Yahoo Finance (price data), OpenAI API (chatbot)
+
+## Request flow
+User -> React frontend -> Backend API -> Python ML model / OpenAI API -> Response -> UI charts and insights
+
+## Folder layout
+- frontend app (existing): src/app, src/components, src/lib
+- backend: backend/index.js, backend/routes/*, backend/models/*
+- ai service: ai-service/app/main.py
+
+## Run locally
+
+### 1) Frontend (Next.js)
+- From project root:
+- npm install
+- npm run dev
+
+### 2) Backend (Express)
+- cd backend
+- npm install
+- copy .env.example to .env and set values
+- npm run dev
+
+### 3) AI service (FastAPI)
+- cd ai-service
+- python -m venv .venv
+- .venv\Scripts\activate
+- pip install -r requirements.txt
+- uvicorn app.main:app --reload --port 8000
+
+## Backend endpoints
+- GET /health
+- GET /api/stocks/:symbol
+- POST /api/predict
+- POST /api/chat
+- POST /api/expenses/categorize
+- POST /api/fraud/detect
+
+## AI service endpoints
+- GET /health
+- POST /predict
+- POST /categorize-expenses
+- POST /detect-fraud
+
+## Notes
+- If OpenAI key is missing, chatbot endpoints return a safe configuration message.
+- If MongoDB is unavailable, frontend home and sitemap routes now fail gracefully.

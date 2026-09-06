@@ -1,12 +1,19 @@
 {
   "name": "trendwise",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "mongoose": "^8.8.0",
+    "openai": "^4.104.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

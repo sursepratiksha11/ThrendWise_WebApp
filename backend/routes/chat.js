@@ -7,7 +7,11 @@ const router = express.Router();
 const ALPHA_VANTAGE_API_KEY = String(process.env.ALPHA_VANTAGE_API_KEY || "").trim();
 const AV_CACHE_TTL_MS = 60_000;
 const quoteCache = new Map();
-const BACKEND_BASE_URL = `http://127.0.0.1:${Number(process.env.PORT || 4000)}`;
+const BACKEND_BASE_URL = String(process.env.API_BASE_URL || "").trim() || (
+  process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : `http://127.0.0.1:${Number(process.env.PORT || 4000)}`
+);
 
 const INDIA_LIVE_SYMBOLS = ["RELIANCE.BSE", "TCS.BSE", "SBIN.BSE", "HDFCBANK.BSE", "INFY.BSE"];
 const US_LIVE_SYMBOLS = ["AAPL", "MSFT", "NVDA", "AMZN", "TSLA"];

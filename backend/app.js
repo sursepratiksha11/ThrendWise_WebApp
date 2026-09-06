@@ -21,6 +21,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Vercel can invoke a catch-all function with the /api prefix removed.
+app.use((req, _res, next) => {
+  if (req.url !== "/health" && !req.url.startsWith("/api/")) {
+    req.url = `/api${req.url.startsWith("/") ? "" : "/"}${req.url}`;
+  }
+  next();
+});
+
 app.get("/health", (_req, res) => {
   res.json({ status: "ok", service: "backend" });
 });
